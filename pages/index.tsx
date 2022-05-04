@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { TimerContainer } from '../components/TimerContainer'
@@ -13,9 +14,20 @@ const Home: NextPage = () => {
   const [seconds, setSeconds] = useState<number>(0)
   const [message, setMessage] = useState<string>('')
 
-  const timeToDays = time * 60 * 60 * 24 * 1000
+  const timeToDays = newTime * 60 * 60 * 24 * 1000
 
   let countDownDate = new Date().getTime() + timeToDays
+
+  const handleClick = () => {
+    setNewTime(newTime)
+    console.log(newTime)
+    setNewTime(0)
+  }
+
+  const handleChange = (e: any) => {
+    let inputTime = e.target.value
+    setNewTime(inputTime)
+  }
 
   useEffect(() => {
     var updateTime = setInterval(() => {
@@ -48,7 +60,7 @@ const Home: NextPage = () => {
     return () => {
       clearInterval(updateTime)
     }
-  }, [time])
+  }, [newTime])
 
   return (
     <div className="flex min-h-screen flex-col items-center bg-[#1e1f29]">
